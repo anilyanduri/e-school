@@ -1,0 +1,27 @@
+                  <td>
+                    <%= school.name %>
+                  </td>
+
+                  <td>
+                    <%= school.description %>
+                  </td>
+
+                  <td>
+                    <%= form_with url: toogle_status_admin_school_url(school), method: :put, local: false do |f|  %>
+                      <%= f.submit "toogle_status", id: "#{dom_id school}_form", class:"toogle-status-button", hidden: true %>
+                      <%= link_to raw(school.active? ? "<i class='fa fa-toggle-on toogle_status'></i>" : "<i class='fa fa-toggle-off toogle_status'></i>"), "#"%>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <%= school.created_by.fullname %>
+                  </td>
+                  <td>
+                      <%= link_to raw("<i class='fa fa-eye' ></i>"), [:admin, school] %>
+                  </td>
+                  <td>
+                      <%= link_to raw("<i class='fa fa-edit'></i>"), edit_admin_school_path(school) %>
+                  </td>
+                  <td>
+                    <%= link_to raw("<i class='fa fa-trash'></i>"), [:admin, school], method: :delete %>
+                  </td>

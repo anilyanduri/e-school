@@ -2323,6 +2323,12 @@
 .fa-qrcode:before {
   content: "\f029";
 }
+.fa-toggle-off:before {
+  content: "\f204";
+}
+.fa-toggle-on:before {
+  content: "\f205";
+}
 .sr-only {
   position: absolute;
   width: 1px;

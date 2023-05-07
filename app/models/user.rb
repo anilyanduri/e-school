@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
   rolify
-  after_create :assign_default_role
 
+  after_create :assign_default_role
   before_save { self.email = email.downcase }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -18,6 +18,10 @@ class User < ApplicationRecord
 
   def assign_default_role
     # self.add_role(:student) if self.roles.blank?
+  end
+
+  def fullname
+    "#{self.first_name} #{self.last_name}".strip()
   end
 
 end

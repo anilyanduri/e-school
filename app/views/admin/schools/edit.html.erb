@@ -1,0 +1,22 @@
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="box">
+                <h1>Editing school</h1>
+
+                <%= render "form", school: @school %>
+
+                <br>
+
+                <div>
+                  <%= link_to raw("<i class='fa fa-eye'></i> Show this school"), [:admin, @school] %> |
+                  <%= link_to raw("<i class='fa fa-list-alt'></i> Schools"), admin_schools_path %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+

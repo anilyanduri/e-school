@@ -11,4 +11,12 @@ Rails.application.routes.draw do
 
   get   'register', controller: :registration, action: :new
   post  'register', controller: :registration, action: :create
+
+  namespace :admin do
+    resources :schools do
+      member do
+        put 'toogle_status'
+      end
+    end
+  end
 end
