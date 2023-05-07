@@ -22,7 +22,7 @@ module SessionsHelper
     user == Current.user
   end
 
-  def redirect_back_or(default, options)
+  def redirect_back_or(default, options={})
     forwarding_url = session[:forwarding_url]
     session.delete(:forwarding_url)
     redirect_to(forwarding_url || default, options)

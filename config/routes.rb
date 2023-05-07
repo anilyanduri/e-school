@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :schools do
       member do
         put 'toogle_status'
+        put 'toogle_school_admin'
       end
     end
   end

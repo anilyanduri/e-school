@@ -17,11 +17,11 @@
                     <%= school.created_by.fullname %>
                   </td>
                   <td>
-                      <%= link_to raw("<i class='fa fa-eye' ></i>"), [:admin, school] %>
+                      <%= link_to raw("<i class='fa fa-arrow-up-right-from-square'></i>"), [:admin, school] %>
                   </td>
                   <td>
                       <%= link_to raw("<i class='fa fa-edit'></i>"), edit_admin_school_path(school) %>
                   </td>
                   <td>
-                    <%= link_to raw("<i class='fa fa-trash'></i>"), [:admin, school], method: :delete %>
+                    <%= link_to raw("<i class='fa fa-trash-can'></i>"), [:admin, school], method: :delete %>
                   </td>

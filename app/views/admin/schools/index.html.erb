@@ -4,8 +4,8 @@
             <div class="col-lg-12">
               <div class="box">
                 <h3>Schools</h3>
-                  <table class="table" id="schools">
-                    <thead>
+                  <table class="table table-striped" id="schools">
+                    <thead class='thead-dark'>
                       <tr>
                         <th scope="col">Name</th>
                         <th scope="col">desctiption</th>
@@ -21,9 +21,9 @@
                       </tr>
                       <% end %>
                       <tr>
-                        <td colspan="6"></td>
-                        <td colspan="1">
-                          <%= link_to raw("<i class='fa fa-plus'></i>"), new_admin_school_path %>
+                        <td colspan="4"></td>
+                        <td colspan="3" class="left">
+                          <%= link_to raw("<i class='fa fa-plus'></i> New School"), new_admin_school_path %>
                         </td>
                       </tr>
                   </tbody>

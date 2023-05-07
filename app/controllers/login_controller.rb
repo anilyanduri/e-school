@@ -14,7 +14,7 @@ class LoginController < ApplicationController
     user = User.find_by(email: params[:user][:email].downcase)
     if user.present? && user.authenticate(params[:user][:password])
       session[:user_id] = user.id
-      redirect_back_or("/", flash: {light: 'Logged in successfully'})
+      redirect_back_or("/")
     else
       flash.now[:danger] = 'Invalid email/password combination!'
       @user = User.new

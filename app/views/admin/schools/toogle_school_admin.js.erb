@@ -1,0 +1,6 @@
+$('#<%= dom_id @user %>').html("<%= escape_javascript(render(partial: 'admin/schools/user', locals: {user: @user, school: @school})) %>")
+
+
+$("#notice").html("<%= escape_javascript(render 'flash')%>")
+$('#notice').show();
+$('#notice').delay(5000).slideUp(300);

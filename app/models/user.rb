@@ -24,4 +24,10 @@ class User < ApplicationRecord
     "#{self.first_name} #{self.last_name}".strip()
   end
 
+  ["student", "school_admin", "admin"].each do |role|
+    define_method "#{role}?" do |resource|
+      self.has_role? role, resource
+    end
+  end
+
 end

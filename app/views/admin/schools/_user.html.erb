@@ -1,0 +1,21 @@
+                  <td>
+                    <%= user.first_name %>
+                  </td>
+
+                  <td>
+                    <%= user.last_name %>
+                  </td>
+
+                  <td>
+                    <%= user.email %>
+                  </td>
+
+                  <td>
+                    <%= form_with url: toogle_school_admin_admin_school_url(id: school.id, user_id: user.id), method: :put, local: false do |f|  %>
+                      <%= f.submit "toogle_school_admin", id: "#{dom_id school}_#{dom_id user}_form", class:"toogle-status-button", hidden: true %>
+                      <%= link_to raw(user.school_admin?(school) ? '<i class="fa fa-regular fa-square-check toogle_school_admin"></i>' : '<i class="fa fa-regular fa-square toogle_school_admin"></i>'), "#"%>
+                    <% end %>
+                  </td>
+                  <td>
+                    <a href="#"><%=raw user.student?(school) ? '<i class="fa fa-regular fa-square-check"></i>' : '<i class="fa fa-regular fa-square"></i>'%></a>
+                  </td>
