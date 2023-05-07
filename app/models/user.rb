@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
+  rolify
+  after_create :assign_default_role
 
   before_save { self.email = email.downcase }
 
@@ -12,5 +14,10 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, message: 'Password should be minimum of 6 chars.'}
 
   validates_presence_of :first_name, message: 'First name cant be blank.'
+
+
+  def assign_default_role
+    # self.add_role(:student) if self.roles.blank?
+  end
 
 end
