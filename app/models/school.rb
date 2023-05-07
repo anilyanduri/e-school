@@ -1,8 +1,11 @@
 class School < ApplicationRecord
 
   belongs_to :created_by, class_name: "User", foreign_key: "created_by_id"
+  resourcify
 
   validates_with IsCreatedByAdmin
+
+  scope :active, -> { where(status: ACTIVE) }
 
   SCHOOL_STATUS.each do |method_name, status|
     define_method "#{method_name.downcase}?" do |*args|

@@ -3,14 +3,18 @@ class RegistrationController < ApplicationController
   def new
     if Current.user.nil?
       @user = User.new
+      @schools = School.active.all.collect {|s| [s.name, s.id] }
     else
-      redirect_to controller: :accounts, action: :index
+      redirect_to root_path
     end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
+      if school = School.find(params[:school_id])
+        @user.add_role :student, school
+      end
       session[:user_id] = @user.id
       flash[:light] = 'Successfully created account'
       redirect_to root_path
