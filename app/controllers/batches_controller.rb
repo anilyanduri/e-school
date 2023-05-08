@@ -1,5 +1,5 @@
 class BatchesController < ApplicationController
-  before_action :set_batch, only: %i[ show edit update destroy ]
+  before_action :set_batch, only: %i[ show edit update destroy enroll ]
   before_action :require_admin_or_school_admin_privilege!, only: %i[new create edit update destroy]
 
 
@@ -12,7 +12,7 @@ class BatchesController < ApplicationController
 
   # GET /batches/1 or /batches/1.json
   def show
-    @users = []
+    @students = @batch.students
   end
 
   # GET /batches/new
@@ -22,6 +22,25 @@ class BatchesController < ApplicationController
 
   # GET /batches/1/edit
   def edit
+
+  end
+
+  def enroll
+    @enrollment = Enrollment.new
+    @enrollment.batch = @batch
+    @enrollment.student = Current.user
+    @enrollment.status = :pending
+    respond_to do |format|
+      if @enrollment.save
+        flash.now[:success] = "Enrollment request sent successfully!"
+        format.js
+        format.json { render :show, status: :ok, location: @batch }
+      else
+        flash.now[:danger] = "Enrollment request sent failed!"
+        format.js
+        format.json { render json: @enrollment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /batches or /batches.json

@@ -3,6 +3,8 @@ class User < ApplicationRecord
   rolify
 
   has_many :schools, :through => :roles, :source => :resource, :source_type => 'School'
+  has_many :enrollments
+  has_many :batches, through: :enrollments
 
   after_create :assign_default_role
   before_save { self.email = email.downcase }

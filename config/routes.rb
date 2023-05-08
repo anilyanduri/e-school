@@ -26,6 +26,11 @@ Rails.application.routes.draw do
     resources :batches
   end
   resources :courses, only: [:index, :show]
-  resources :batches, only: [:index, :show]
+  resources :batches, only: [:index, :show] do
+    member do
+      put 'enroll'
+      # get 'enroll'
+    end
+  end
 
 end

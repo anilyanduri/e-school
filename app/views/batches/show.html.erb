@@ -4,7 +4,7 @@
             <div class="col-lg-12">
               <div class="box">
                 <h3>Batch</h3>
-                <table class="table" id="schools">
+                <table class="table" id="batches">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
@@ -33,3 +33,19 @@
           </div>
         </div>
       </div>
+
+<% content_for :footer_js do %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const batchesContainer = document.getElementById("batches");
+        batchesContainer.addEventListener("click", function(event) {
+          if (event.target.matches(".enroll-icon")) {
+            const toogleTd = event.target.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".enroll-button");
+            toogleSubmit.click();
+          }
+        });
+      });
+    </script>
+  <% end %>
+

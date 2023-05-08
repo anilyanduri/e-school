@@ -3,7 +3,6 @@ class Course < ApplicationRecord
   has_many :batches
   before_create :generate_material
 
-
   scope :with_school, -> (school) {
     where('school_id' => school.id)
   }
