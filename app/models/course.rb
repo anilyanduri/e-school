@@ -1,8 +1,8 @@
 class Course < ApplicationRecord
   belongs_to :school
 
-  scope :school_id, -> (school_id) {
-    where('school_id' => school_id)
+  scope :with_school, -> (school) {
+    where('school_id' => school.id)
   }
 
   def generate_material
