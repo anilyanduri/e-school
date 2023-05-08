@@ -23,7 +23,9 @@ Rails.application.routes.draw do
 
   scope :admin, as: :admin do
     resources :courses
+    resources :batches
   end
   resources :courses, only: [:index, :show]
+  resources :batches, only: [:index, :show]
 
 end

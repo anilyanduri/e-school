@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
-    @users = []
+    @batches = @course.batches
   end
 
   # GET /courses/new
@@ -27,11 +27,10 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
     @course.school = Current.school
-    @course.generate_material
     respond_to do |format|
       if @course.save
         flash.now[:success] = "Course was successfully created."
-        format.html { redirect_to admin_course_url(@course), notice: "Course was successfully created." }
+        format.html { redirect_to admin_course_url(@course) }
         format.json { render :show, status: :created, location: @course }
       else
         flash.now[:danger] = @course.errors.collect {|e| e.options[:message]  }.join('<br />')

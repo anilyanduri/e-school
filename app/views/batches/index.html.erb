@@ -1,0 +1,37 @@
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="box">
+                <h3>Batch</h3>
+                <table class="table" id="schools">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Course Name</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Students Enroled</th>
+                      <th scope="col" colspan="3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @batches.each do |batch| %>
+                    <tr id="<%= dom_id batch%>">
+                      <%= render batch %>
+                    </tr>
+                    <% end %>
+                    <% if Current.user.school_admin?(Current.school) %>
+                    <tr>
+                      <td colspan="4"></td>
+                      <td colspan="3">
+                        <%= link_to raw("<i class='fa fa-plus'></i> Batch"), new_admin_batch_path %>
+                      </td>
+                    </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

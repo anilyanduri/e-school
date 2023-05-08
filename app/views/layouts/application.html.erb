@@ -51,7 +51,7 @@
                   </li>
                 <% elsif Current.school&.present? %>
                   <li class="nav-item">
-                    <a class="nav-link" href="/school/<%= Current.school.id %>">School</a>
+                    <a class="nav-link" href="/courses">Courses</a>
                   </li>
                 <%end%>
               </ul>
@@ -120,10 +120,10 @@
       </div>
 
       <!-- FOOTER -->
-      <footer class="footer mt-auto py-3 bg-light">
+      <footer class="mt-auto py-3 bg-light footer">
         <div class="container">
-          <p class="float-end"><a href="#"></a></p>
-          <p>&copy; 2023 <i class="fa-thin fa-school fa-sm"></i> E Schools &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+          <!-- <p class="float-end"><a href="#"></a></p> -->
+          <p>&copy; 2023 <i class="fa fa-school fa-2xs"></i> E Schools &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
         </div>
       </footer>
     </main>

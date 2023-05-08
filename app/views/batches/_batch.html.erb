@@ -1,0 +1,30 @@
+                  <td>
+                    <%= batch.name %>
+                  </td>
+
+                  <td>
+                    <%= batch.course.name %>
+                  </td>
+
+                  <td>
+                    <%=raw batch.status? ? "<i class='fa fa-regular fa-square-check' style='color: #488ed2;'></i>" : "<i class='fa fa-regular fa-square' style='color: #488ed2;'></i>"%>
+                  </td>
+
+                  <td>
+                    <%=  %>
+                  </td>
+                  <% if Current.user.school_admin?(Current.school) %>
+                    <td>
+                        <%= link_to raw("<i class='fa fa-eye'></i>"), [:admin, batch] %>
+                    <td>
+                        <%= link_to raw("<i class='fa fa-edit'></i>"), edit_admin_batch_path(batch) %>
+                    </td>
+                    <td>
+                      <%= link_to raw("<i class='fa fa-trash-can'></i>"), [:admin, batch], method: :delete %>
+                    </td>
+                  <% else %>
+                    </td>
+                    <td colspan="3">
+                        <%= link_to raw("<i class='fa fa-eye'></i>"), batch%>
+                    </td>
+                  <% end %>
