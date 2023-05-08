@@ -20,4 +20,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  scope :admin, as: :admin do
+    resources :courses
+  end
+  resources :courses, only: [:index, :show]
+
 end

@@ -1,0 +1,30 @@
+                  <td>
+                    <%= course.name %>
+                  </td>
+
+                  <td>
+                    <%= course.description %>
+                  </td>
+
+                  <td>
+                    <%= course.material.to_s[0..25] %>
+                  </td>
+
+                  <td>
+                    <%=raw course.status? ? "<i class='fa fa-regular fa-square-check' style='color: #488ed2;'></i>" : "<i class='fa fa-regular fa-square' style='color: #488ed2;'></i>"%>
+                  </td>
+                  <% if Current.user.school_admin?(Current.school) %>
+                    <td>
+                        <%= link_to raw("<i class='fa fa-eye'></i>"), [:admin, course] %>
+                    <td>
+                        <%= link_to raw("<i class='fa fa-edit'></i>"), edit_admin_course_path(course) %>
+                    </td>
+                    <td>
+                      <%= link_to raw("<i class='fa fa-trash-can'></i>"), [:admin, course], method: :delete %>
+                    </td>
+                  <% else %>
+                    </td>
+                    <td colspan="3">
+                        <%= link_to raw("<i class='fa fa-eye'></i>"), course%>
+                    </td>
+                  <% end %>

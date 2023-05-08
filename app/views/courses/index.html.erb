@@ -1,0 +1,42 @@
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="box">
+                <h3>Courses Offered</h3>
+                  <table class="table table-striped" id="course">
+                    <thead class='thead-dark'>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">desctiption</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="3">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @courses.each do |course| %>
+                      <tr id="<%= dom_id course%>">
+                        <%= render course %>
+                      </tr>
+                      <% end %>
+                      <tr>
+                        <td colspan="4">
+                          <%= will_paginate @courses, link_separator: "&nbsp;", next_label: '<i class="fa-solid fa-arrow-right-long"></i>', previous_label: '<i class="fa-solid fa-arrow-left-long"></i>' %>
+                        </td>
+                        <% if Current.user.school_admin?(Current.school) %>
+                        <td colspan="3" >
+                          <%= link_to raw("<i class='fa fa-plus'></i> New Course"), new_admin_course_path %>
+                        </td>
+                        <% else %>
+                        <td colspan="3"></td>
+                        <% end %>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
