@@ -11,7 +11,7 @@
                         <th scope="col">desctiption</th>
                         <th scope="col">Status</th>
                         <th scope="col">Created By</th>
-                        <th scope="col" colspan="3">Action</th>
+                        <th scope="col" colspan="3">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -21,8 +21,10 @@
                       </tr>
                       <% end %>
                       <tr>
-                        <td colspan="4"></td>
-                        <td colspan="3" class="left">
+                        <td colspan="4">
+                          <%= will_paginate @schools, link_separator: "&nbsp;", next_label: '<i class="fa-solid fa-arrow-right-long"></i>', previous_label: '<i class="fa-solid fa-arrow-left-long"></i>' %>
+                        </td>
+                        <td colspan="3" >
                           <%= link_to raw("<i class='fa fa-plus'></i> New School"), new_admin_school_path %>
                         </td>
                       </tr>

@@ -3,29 +3,28 @@ module Admin
     before_action :set_school, only: %i[ show edit update destroy toogle_status toogle_school_admin]
     before_action :require_admin_privilege!
 
-    # GET /schools or /schools.json
+    # GET /admin/schools or /admin/schools.json
     def index
-      @schools = School.all
+      per_page = 10
+      page = params[:page] || 1
+      @schools = School.paginate(page: page, per_page: per_page)
     end
 
-    # GET /schools/1 or /schools/1.json
+    # GET /admin/schools/1 or /admin/schools/1.json
     def show
-      @users = []
-      @users << @school.school_admins
-      @users << @school.students
-      @users.flatten!.uniq!
+      @users = @school.users.uniq
     end
 
-    # GET /schools/new
+    # GET /admin/schools/new
     def new
       @school = School.new
     end
 
-    # GET /schools/1/edit
+    # GET /admin/schools/1/edit
     def edit
     end
 
-    # POST /schools or /schools.json
+    # POST /admin/schools or /admin/schools.json
     def create
       @school = School.new(school_params)
       @school.created_by = Current.user
@@ -44,7 +43,7 @@ module Admin
       end
     end
 
-    # PATCH/PUT /schools/1 or /schools/1.json
+    # PATCH/PUT /admin/schools/1 or /admin/schools/1.json
     def update
       respond_to do |format|
         if @school.update(school_params)
@@ -95,7 +94,7 @@ module Admin
       end
     end
 
-    # DELETE /schools/1 or /schools/1.json
+    # DELETE /admin/schools/1 or /admin/schools/1.json
     def destroy
       @school.destroy
 

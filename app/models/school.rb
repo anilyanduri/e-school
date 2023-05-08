@@ -2,6 +2,7 @@ class School < ApplicationRecord
 
   belongs_to :created_by, class_name: "User", foreign_key: "created_by_id"
   resourcify
+  has_many :users, through: :roles, class_name: 'User', source: :users
 
   validates_with IsCreatedByAdmin
   validates_presence_of :name, message: 'Name cant be blank.'
