@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   rolify
 
+  has_many :schools, :through => :roles, :source => :resource, :source_type => 'School'
+
   after_create :assign_default_role
   before_save { self.email = email.downcase }
 

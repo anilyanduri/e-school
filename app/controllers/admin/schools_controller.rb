@@ -1,7 +1,8 @@
 module Admin
   class SchoolsController < ApplicationController
     before_action :set_school, only: %i[ show edit update destroy toogle_status toogle_school_admin]
-    before_action :require_admin_privilege!
+    before_action :require_admin_privilege!, only: %i[index new create destroy toogle_status toogle_school_admin]
+    before_action :require_admin_or_school_admin_privilege!, only: %i[show edit update]
 
     # GET /admin/schools or /admin/schools.json
     def index

@@ -20,12 +20,14 @@
                     <tr id="<%= dom_id @school%>">
                       <%= render @school %>
                     </tr>
+                    <% if Current.user.admin?(nil) %>
                     <tr>
                       <td colspan="5"></td>
                       <td colspan="2">
                         <%= link_to raw("<i class='fa fa-list-alt'></i> Schools"), admin_schools_path %>
                       </td>
                     </tr>
+                    <%end%>
                   </tbody>
                 </table>
                 <h4>Students & School Admins</h4>

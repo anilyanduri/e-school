@@ -18,6 +18,10 @@ module SessionsHelper
     Current.user = User.find_by_id(session[:user_id]) if session[:user_id]
   end
 
+  def set_current_school
+    Current.school = Current.user&.schools&.first
+  end
+
   def current_user?(user)
     user == Current.user
   end
@@ -32,11 +36,24 @@ module SessionsHelper
     session[:forwarding_url] = request.env["HTTP_REFERER"]
   end
 
+  def require_admin_or_school_admin_privilege!
+    if ! (Current.user.has_role?(ADMIN) || Current.user.has_role?(SCHOOL_ADMIN, (@school || Current.school) ) )
+      Rails.logger.info "[require_admin_privilege] User dont have Admin role."
+      store_location
+      respond_to do |format|
+        flash.now[:dander] = "<h1>Unauthorized !<h1>".html_safe
+        format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true }
+        format.json { render json: {status: 401}, status: 401 }
+      end
+    end
+  end
+
   def require_admin_privilege!
     unless Current.user.has_role?(ADMIN)
       Rails.logger.info "[require_admin_privilege] User dont have Admin role."
       store_location
       respond_to do |format|
+        flash.now[:dander] = "<h1>Unauthorized !<h1>".html_safe
         format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true }
         format.json { render json: {status: 401}, status: 401 }
       end
