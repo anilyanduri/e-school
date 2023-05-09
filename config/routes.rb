@@ -39,5 +39,11 @@ Rails.application.routes.draw do
       put 'enroll'
     end
   end
+  resources :enrollments, only: [] do
+    member do
+      put 'progress/:batch_id', action: :progress, as: :progress
+      put 'complete/:batch_id', action: :complete, as: :complete
+    end
+  end
 
 end

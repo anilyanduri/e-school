@@ -24,7 +24,7 @@ class Enrollment < ApplicationRecord
     end
   end
 
-  {approve: :approved, reject: :rejected}.each do |method_name, status|
+  {approve: :approved, reject: :rejected, complete: :completed}.each do |method_name, status|
     define_method "#{method_name}" do ||
       self.status = status
     end
