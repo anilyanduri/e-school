@@ -18,6 +18,7 @@ class LoginController < ApplicationController
     else
       flash.now[:danger] = 'Invalid email/password combination!'
       @user = User.new
+      @schools = School.active.all.collect {|s| [s.name, s.id] }
       render( template: 'registration/new' )
     end
   end
