@@ -11,7 +11,7 @@
                   </td>
 
                   <td>
-                    <%=  %>
+                    <%= batch.enrollments.count  %>
                   </td>
                   <% if Current.user.school_admin?(Current.school) %>
                     <td>
@@ -26,7 +26,8 @@
                     <td>
                       <%= link_to raw("<i class='fa fa-eye'></i>"), batch %>
                     </td>
-                    <td colspan="2">
+                    <td><%=link_to raw(icon_from_string('studey', "#488ed2")), study_course_path(batch.course)%></td>
+                    <td>
                     <% unless Current.user.enrollments.with_batch(batch)&.first.present? %>
                       <%= form_with url: enroll_batch_path(batch), method: :put, local: false do |f|  %>
                         <%= f.submit "enroll_batch", id: "#{dom_id batch}_form", class: "enroll-button", hidden: true %>

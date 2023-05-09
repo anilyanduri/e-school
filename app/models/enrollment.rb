@@ -18,9 +18,15 @@ class Enrollment < ApplicationRecord
     end
   end
 
-  [:pending, :approved, :rejected, :completed].each do |method_name|
+  ['pending', 'approved', 'rejected', 'completed'].each do |method_name|
     define_method "#{method_name}?" do ||
-      self.status == status
+      self.status == method_name
+    end
+  end
+
+  {approve: :approved, reject: :rejected}.each do |method_name, status|
+    define_method "#{method_name}" do ||
+      self.status = status
     end
   end
 

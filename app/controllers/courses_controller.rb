@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update destroy study]
   before_action :require_admin_or_school_admin_privilege!, only: %i[new create edit update destroy]
+  before_action :enroled!, only: %i[study]
 
   # GET /courses or /courses.json
   def index
@@ -12,6 +13,11 @@ class CoursesController < ApplicationController
   # GET /courses/1 or /courses/1.json
   def show
     @batches = @course.batches
+  end
+
+  # GET /courses/1/study or /courses/1/study.json
+  def study
+
   end
 
   # GET /courses/new
@@ -75,5 +81,16 @@ class CoursesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def course_params
       params.require(:course).permit(:name, :description, :material, :status)
+    end
+
+    def enroled!
+      if ! Current.user.active_course == @course
+        Rails.logger.info "[require_course to enroled!] User didnt enroled to course"
+        respond_to do |format|
+          flash.now[:dander] = "<h1>Unauthorized !<h1>".html_safe
+          format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true }
+          format.json { render json: {status: 401}, status: 401 }
+        end
+      end
     end
 end

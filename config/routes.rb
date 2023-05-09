@@ -23,13 +23,20 @@ Rails.application.routes.draw do
 
   scope :admin, as: :admin do
     resources :courses
-    resources :batches
+    resources :batches do
+      member do
+        put 'endorse/:status', action: :endorse, constraints: { status: ['approve', 'reject'] }, as: :endrose
+      end
+    end
   end
-  resources :courses, only: [:index, :show]
+  resources :courses, only: [:index, :show] do
+    member do
+      get 'study'
+    end
+  end
   resources :batches, only: [:index, :show] do
     member do
       put 'enroll'
-      # get 'enroll'
     end
   end
 

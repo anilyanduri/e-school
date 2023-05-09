@@ -28,20 +28,63 @@
                     <%end%>
                   </tbody>
                 </table>
+                <h2>Students enrolled</h2>
+                <table class="table table-striped" id="students">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Enrolment Status</th>
+                      <%if Current.user.school_admin?(Current.school) %>
+                        <th scope="col" colspan="2">Actions</th>
+                      <% else %>
+                        <th scope="col" colspan="2">Progress</th>
+                      <% end %>
+                    </tr>
+                  </thead>
+                  <tbody id="students_body">
+                    <% @students.each do |student|%>
+                    <tr id="<%= dom_id student%>">
+                      <%= render partial: 'student', locals: {student: student, batch: @batch}%>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-<% content_for :footer_js do %>
+  <% content_for :footer_js do %>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         const batchesContainer = document.getElementById("batches");
         batchesContainer.addEventListener("click", function(event) {
+          console.log('added addEventListener')
           if (event.target.matches(".enroll-icon")) {
             const toogleTd = event.target.parentNode.parentNode;
             const toogleSubmit = toogleTd.querySelector(".enroll-button");
+            toogleSubmit.click();
+          }
+          if(event.target.parentNode.matches(".enroll-icon")){
+            const toogleTd = event.target.parentNode.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".enroll-button");
+            toogleSubmit.click();
+          }
+        });
+        const studentsContainer = document.getElementById("students");
+        studentsContainer.addEventListener("click", function(event) {
+          console.log('added addEventListener')
+          if (event.target.matches(".endrose-icon")) {
+            const toogleTd = event.target.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".endrose-button");
+            toogleSubmit.click();
+          }
+          if(event.target.parentNode.matches(".endrose-icon")){
+            const toogleTd = event.target.parentNode.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".endrose-button");
             toogleSubmit.click();
           }
         });

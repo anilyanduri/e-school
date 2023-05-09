@@ -5,6 +5,16 @@ class User < ApplicationRecord
   has_many :schools, :through => :roles, :source => :resource, :source_type => 'School'
   has_many :enrollments
   has_many :batches, through: :enrollments
+  has_many :courses, through: :batches
+
+  has_one :active_enrollment, -> { where status: :approved }, class_name: 'Enrollment', foreign_key: 'user_id'
+  has_one :active_batch, through: :active_enrollment, source: :batch
+  has_one :active_course, through: :active_batch, source: :course
+
+  scope :with_batch, -> (batch) {
+    where('batch_id' => batch.id)
+  }
+
 
   after_create :assign_default_role
   before_save { self.email = email.downcase }

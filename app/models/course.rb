@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   belongs_to :school
   has_many :batches
+
   before_create :generate_material
 
   scope :with_school, -> (school) {

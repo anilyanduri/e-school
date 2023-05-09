@@ -1,6 +1,6 @@
 class BatchesController < ApplicationController
-  before_action :set_batch, only: %i[ show edit update destroy enroll ]
-  before_action :require_admin_or_school_admin_privilege!, only: %i[new create edit update destroy]
+  before_action :set_batch, only: %i[ show edit update destroy enroll endorse ]
+  before_action :require_admin_or_school_admin_privilege!, only: %i[new create edit update destroy, endorse]
 
 
   # GET /batches or /batches.json
@@ -25,6 +25,27 @@ class BatchesController < ApplicationController
 
   end
 
+  def endorse
+    status = params[:status]
+    @student = User.find(params[:student_id])
+    Rails.logger.info "------------------_> #{(enrollment = @student.enrollments.with_batch(@batch).first) && enrollment&.pending?} -- #{enrollment&.pending?}  ."
+    if (enrollment = @student.enrollments.with_batch(@batch).first) && enrollment&.pending?
+      enrollment.send(status)
+      respond_to do |format|
+        if enrollment.save
+          @student.reload
+          flash.now[:success] = "Endrosment successfully!"
+          format.js
+          format.json { render :show, status: :ok, location: @batch }
+        else
+          flash.now[:danger] = "Endrosment failed!"
+          format.js
+          format.json { render json: enrollment.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   def enroll
     @enrollment = Enrollment.new
     @enrollment.batch = @batch
@@ -36,6 +57,7 @@ class BatchesController < ApplicationController
         format.js
         format.json { render :show, status: :ok, location: @batch }
       else
+        Rails.logger.error "Enrollment request sent failed! with #{@enrollment.errors.inspect}"
         flash.now[:danger] = "Enrollment request sent failed!"
         format.js
         format.json { render json: @enrollment.errors, status: :unprocessable_entity }
@@ -90,6 +112,7 @@ class BatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
       @batch = Batch.find(params[:id])
+      Rails.logger.info "-------->set_batch #{@batch}"
     end
 
     # Only allow a list of trusted parameters through.

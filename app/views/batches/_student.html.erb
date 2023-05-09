@@ -1,0 +1,27 @@
+                      <td><%= student.id %></td>
+                      <td><%= student.fullname %></td>
+                      <td><%= student.email %></td>
+                      <td><%=raw get_icon(@batch, student, "#488ed2")%></td>
+                      <% if Current.user.school_admin?(Current.school) && student.enrollments.with_batch(@batch).first.pending? %>
+                      <td>
+                        <%= form_with url: "/admin/batches/#{@batch.id}/endorse/approve", method: :put, local: false do |f|  %>
+                          <%= f.hidden_field :student_id, value: student.id %>
+                          <%= f.submit "endrose_batch", id: "#{dom_id batch}_approve_form", class: "endrose-button", hidden: true %>
+                          <%= link_to raw(icon_from_string('approve')), "#", class: 'endrose-icon' %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= form_with url: "/admin/batches/#{@batch.id}/endorse/reject", method: :put, local: false do |f|  %>
+                          <%= f.hidden_field :student_id, value: student.id %>
+                          <%= f.submit "endrose_batch", id: "#{dom_id batch}_approve_form", class: "endrose-button", hidden: true %>
+                          <%= link_to raw(icon_from_string('reject')), "#", class: 'endrose-icon' %>
+                        <% end %>
+                      </td>
+                      <% else %>
+                      <td colspan="2">
+                        <div class="progress">
+                          <%progress = student.enrollments.with_batch(@batch).first.progress.to_i%>
+                          <div class="progress-bar" role="progressbar" style="width: <%=progress%>%;" aria-valuenow="<%=progress%>" aria-valuemin="0" aria-valuemax="100"><%=progress%>%</div>
+                        </div>
+                      </td>
+                      <% end %>
