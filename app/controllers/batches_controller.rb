@@ -2,7 +2,6 @@ class BatchesController < ApplicationController
   before_action :set_batch, only: %i[ show edit update destroy enroll endorse ]
   before_action :require_admin_or_school_admin_privilege!, only: %i[new create edit update destroy, endorse]
 
-
   # GET /batches or /batches.json
   def index
     per_page = 10
@@ -28,7 +27,6 @@ class BatchesController < ApplicationController
   def endorse
     status = params[:status]
     @student = User.find(params[:student_id])
-    Rails.logger.info "------------------_> #{(enrollment = @student.enrollments.with_batch(@batch).first) && enrollment&.pending?} -- #{enrollment&.pending?}  ."
     if (enrollment = @student.enrollments.with_batch(@batch).first) && enrollment&.pending?
       enrollment.send(status)
       respond_to do |format|
@@ -112,7 +110,6 @@ class BatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
       @batch = Batch.find(params[:id])
-      Rails.logger.info "-------->set_batch #{@batch}"
     end
 
     # Only allow a list of trusted parameters through.
