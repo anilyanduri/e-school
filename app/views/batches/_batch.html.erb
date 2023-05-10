@@ -26,7 +26,7 @@
                     <td>
                       <%= link_to raw("<i class='fa fa-eye'></i>"), batch %>
                     </td>
-                    <% if Current.user.enrollments.with_batch(batch)&.first.approved? %>
+                    <% if Current.user.enrollments.with_batch(batch)&.first&.approved? %>
                     <td><%=link_to raw(icon_from_string('study', "#488ed2")), study_course_path(batch.course)%></td>
                     <td>
                       <%=raw get_icon(batch, Current.user, "#488ed2")%>

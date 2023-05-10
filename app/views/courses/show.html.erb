@@ -61,3 +61,27 @@
           </div>
         </div>
       </div>
+
+
+
+  <% content_for :footer_js do %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const batchesContainer = document.getElementById("batches");
+        batchesContainer.addEventListener("click", function(event) {
+          console.log('added addEventListener')
+          if (event.target.matches(".enroll-icon")) {
+            const toogleTd = event.target.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".enroll-button");
+            toogleSubmit.click();
+          }
+          if(event.target.parentNode.matches(".enroll-icon")){
+            const toogleTd = event.target.parentNode.parentNode.parentNode;
+            const toogleSubmit = toogleTd.querySelector(".enroll-button");
+            toogleSubmit.click();
+          }
+        });
+      });
+    </script>
+  <% end %>
+
