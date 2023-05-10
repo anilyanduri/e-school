@@ -42,7 +42,7 @@ module SessionsHelper
       store_location
       respond_to do |format|
         flash.now[:dander] = "<h1>Unauthorized !<h1>".html_safe
-        format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true }
+        format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true, status: 401 }
         format.json { render json: {status: 401}, status: 401 }
       end
     end
@@ -54,7 +54,7 @@ module SessionsHelper
       store_location
       respond_to do |format|
         flash.now[:dander] = "<h1>Unauthorized !<h1>".html_safe
-        format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true }
+        format.html { render html: "<h1>Unauthorized !<h1>".html_safe, layout: true, status: 401 }
         format.json { render json: {status: 401}, status: 401 }
       end
     end
