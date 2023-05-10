@@ -43,5 +43,23 @@ RSpec.describe "Admin::SchoolsControllers", type: :request do
     end
   end
 
+  describe "Update school" do
+    it "schold update school" do
+      login(admin)
+      school
+      put "/admin/schools/#{school.id}", params: {"school"=>{"name"=>"Test 3 update"}}
+      expect(school.reload.name).to eq "Test 3 update"
+    end
+  end
+
+  describe "adding admin to schools" do
+    it "schold add admin to school" do
+      login(admin)
+      school
+      user
+      put "/admin/schools/#{school.id}/toogle_school_admin/", params: {user_id: user.id}, xhr: true
+      expect(user.has_role?(:school_admin, school)).to eq true
+    end
+  end
 
 end
